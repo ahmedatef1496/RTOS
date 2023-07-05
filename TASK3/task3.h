@@ -35,6 +35,11 @@
 #define   STATE1_DELAY   400
 
 #define   STATE2_DELAY   100
+
+#define   SHORTPRESS      2
+
+#define   LONGPRESS       4
+
 void Task3_create(void);
 
 			

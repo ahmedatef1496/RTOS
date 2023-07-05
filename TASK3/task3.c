@@ -62,17 +62,17 @@ void ButtonTask( void * pvParameters )
 				endTicks = xTaskGetTickCount();
 				u16PressTime = (endTicks - startTicks) / configTICK_RATE_HZ;
 				
-				if(u16PressTime > 2 && u16PressTime < 4)
+				if(u16PressTime > SHORTPRESS && u16PressTime < LONGPRESS)
 				{
-					gu16ToggleTime = 400;
+					gu16ToggleTime = STATE1_DELAY;
 				}
-				else if(u16PressTime > 4)
+				else if(u16PressTime > LONGPRESS)
 				{
-					gu16ToggleTime = 100;
+					gu16ToggleTime = STATE2_DELAY;
 				}
-				else if(u16PressTime < 2)
+				else if(u16PressTime < SHORTPRESS)
 				{
-					gu16ToggleTime = 0;
+					gu16ToggleTime = DEFAULT_DELAY;
 				}
 			}
 			vTaskDelay(50);

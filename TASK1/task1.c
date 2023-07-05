@@ -20,10 +20,10 @@ void ToggleLEDTask( void * pvParameters )
     {
 			GPIO_write(LED_PORT, LED_PIN, PIN_IS_HIGH);
 				
-			vTaskDelay(1000);
+			vTaskDelay(LED_DELAY);
 				
 			GPIO_write(LED_PORT, LED_PIN, PIN_IS_LOW);
 				
-			vTaskDelay(1000);
+			vTaskDelay(LED_DELAY);
     }
 }

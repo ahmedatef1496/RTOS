@@ -23,6 +23,9 @@
 #define TASK1_STACK_SIZE   100
 #define TASK1_NAME		  "Toggle LED Task"
 
+
+#define   LED_DELAY         1000
+
 void TASK1_create(void);
 
 			

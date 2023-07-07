@@ -23,7 +23,7 @@ QueueHandle_t xUARTQueue;
 
 void A2_Task3create(void)
 {
-	xUARTQueue = xQueueCreate( QueueLength, ItemSize  ); // 10 locations, string of 20 chars
+	xUARTQueue = xQueueCreate( QueueLength, ItemSize  ); 
 	
 	xTaskCreate(Button1_task,  BTN1TASK_NAME, BTN1TASK_STACK_SIZE, NULL, BTN1TASK_PRIORITY, &Button1Task_Handler );
 	xTaskCreate(Button2_task,  BTN2TASK_NAME, BTN2TASK_STACK_SIZE, NULL, BTN2TASK_PRIORITY, &Button2Task_Handler );
@@ -33,44 +33,44 @@ void A2_Task3create(void)
 
 void Button1_task( void * pvParameters )
 {
-		pinState_t BTN1OldState = PIN_IS_LOW;
-		pinState_t BTN1NewState;
+		pinState_t BTN1State1 = PIN_IS_LOW;
+		pinState_t BTN1State2;
     for( ;; )
     {
-				BTN1NewState = GPIO_read(BTN1_PORT, BTN1_PIN);
+				BTN1State2 = GPIO_read(BTN1_PORT, BTN1_PIN);
 			  /* Case Rising Edge */
-				if(BTN1OldState == PIN_IS_LOW && BTN1NewState == PIN_IS_HIGH)
+				if(BTN1State1 == PIN_IS_LOW && BTN1State2 == PIN_IS_HIGH)
 				{
 						xQueueSend( xUARTQueue, ( unsigned char * )"BTN1 RISING" , portMAX_DELAY );
 				}
 				/* Case Falling Edge */
-				else if(BTN1OldState == PIN_IS_HIGH && BTN1NewState == PIN_IS_LOW)
+				else if(BTN1State1 == PIN_IS_HIGH && BTN1State2 == PIN_IS_LOW)
 				{
 						xQueueSend( xUARTQueue, ( unsigned char * )"BTN1 FALLING" , portMAX_DELAY );
 				}
-				BTN1OldState = BTN1NewState;
+				BTN1State1 = BTN1State2;
 				vTaskDelay(100);
     }
 }
 
 void Button2_task( void * pvParameters )
 {
-	  pinState_t BTN2OldState = PIN_IS_LOW;
-    pinState_t BTN2NewState;
+	  pinState_t BTN2State1 = PIN_IS_LOW;
+    pinState_t BTN2State2;
     for( ;; )
     {
-				BTN2NewState = GPIO_read(BTN2_PORT, BTN2_PIN);
+				BTN2State2 = GPIO_read(BTN2_PORT, BTN2_PIN);
 			  /* Case Rising Edge */
-				if(BTN2OldState == PIN_IS_LOW && BTN2NewState == PIN_IS_HIGH)
+				if(BTN2State1 == PIN_IS_LOW && BTN2State2 == PIN_IS_HIGH)
 				{
 						xQueueSend( xUARTQueue, ( unsigned char * )"BTN2  RISING" , portMAX_DELAY );
 				}
 				/* Case Falling Edge */
-				else if(BTN2OldState == PIN_IS_HIGH && BTN2NewState == PIN_IS_LOW)
+				else if(BTN2State1 == PIN_IS_HIGH && BTN2State2 == PIN_IS_LOW)
 				{
 						xQueueSend( xUARTQueue, ( unsigned char * )"BTN2 FALLING" , portMAX_DELAY );
 				}
-				BTN2OldState = BTN2NewState;
+				BTN2State1 = BTN2State2;
 				vTaskDelay(100);
 		}
 }
